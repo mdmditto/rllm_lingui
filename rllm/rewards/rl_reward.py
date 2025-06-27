@@ -2,6 +2,7 @@ from rllm.rewards.reward_types import RewardConfig, RewardFn, RewardInput, Rewar
 from rllm.rewards.math_reward import RewardMathFn
 from rllm.rewards.code_reward import rllm_reward_fn_code 
 from rllm.rewards.math_reward import rllm_reward_fn_math
+from rllm.rewards.math_utils.utils import count_hedging_markers
 from typing import Union, List
 import json 
 
@@ -28,6 +29,11 @@ class RLRewardFn(RewardFn):
         if self.config.cot_reward_weight != 0:
             cot_reward_output = self.cot_reward_fn(input)
             reward += self.config.cot_reward_weight * cot_reward_output.reward
+
+        if self.config.hedging_beta > 0:
+            # assume `input.llm_solution` is your generated text
+            num_hedges = count_hedging_markers(input.llm_solution)
+            reward -= self.config.hedging_beta * num_hedges
         
         return RewardOutput(
             reward=reward,

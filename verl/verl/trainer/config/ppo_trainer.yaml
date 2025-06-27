@@ -151,6 +151,17 @@ algorithm:
   kl_ctrl:
     type: fixed
     kl_coef: 0.001
+  reward:
+    # point at the RLRewardFn class you edited
+    _target_: rllm.rewards.rl_reward.RLRewardFn
+
+    # your hedging penalty weight
+    hedging_beta: 0.05
+
+    # whatever other weights you want
+    math_reward_weight: ${..math_reward_weight}     # or hard-code 1.0
+    code_reward_weight: ${..code_reward_weight}     # or 1.0
+    cot_reward_weight: ${..cot_reward_weight} 
 
 trainer:
   rejection_sample: False # Reject sample prompts that all succeed or all fail (0 signal for GRPO due to normalization).

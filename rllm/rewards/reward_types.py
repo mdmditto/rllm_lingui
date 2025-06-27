@@ -26,6 +26,9 @@ class RewardConfig:
     
     # Bonus reward for calling tools.
     toolcall_bonus: float = 0.5
+	
+    # How much is penalize the hedging markers
+    hedging_beta: float = 0.3
 
 
 class RewardType(Enum):

@@ -67,7 +67,6 @@ python3 -m verl.trainer.main_ppo \
     trainer.default_hdfs_dir=null \
     ++algorithm.use_ray=true \
     +algorithm.ray_address=auto \
-    +algorithm.reward.hedging_beta=0.3 \
     +trainer.experiment_name=ray-hedge \
     +data.train_files=/home/mm328/rllm/data/deepscaler_train_1pct.parquet \
     +trainer.total_epochs=3 \

@@ -159,9 +159,9 @@ algorithm:
     hedging_beta: 0.2
 
     # whatever other weights you want
-    math_reward_weight: ${..math_reward_weight}     # or hard-code 1.0
-    code_reward_weight: ${..code_reward_weight}     # or 1.0
-    cot_reward_weight: ${..cot_reward_weight} 
+    math_reward_weight: 1.0 #${..math_reward_weight}   
+    code_reward_weight: 1.0 #${..code_reward_weight}    
+    cot_reward_weight: 0.0 #${..cot_reward_weight} 
 
 trainer:
   rejection_sample: False # Reject sample prompts that all succeed or all fail (0 signal for GRPO due to normalization).

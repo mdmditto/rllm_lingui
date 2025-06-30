@@ -65,6 +65,8 @@ python3 -m verl.trainer.main_ppo \
     trainer.save_freq=20 \
     trainer.test_freq=20 \
     trainer.default_hdfs_dir=null \
-    +algorithm.use_ray=false \
+    +algorithm.use_ray=true \
+    +algorithm.ray_address=auto \
+    +algorithm.reward.hedging_beta=0.3 \
     +trainer.log_level=DEBUG \
     trainer.total_epochs=30 "${@:1}"

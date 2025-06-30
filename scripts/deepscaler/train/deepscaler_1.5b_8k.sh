@@ -67,7 +67,7 @@ python3 -m verl.trainer.main_ppo \
     trainer.default_hdfs_dir=null \
     ++algorithm.use_ray=true \
     +algorithm.ray_address=auto \
-    +data.train_files=/home/mm328/rllm/data/deepscaler_train_1pct.parquet \
+    ++data.train_files=/home/mm328/rllm/data/deepscaler_train_1pct.parquet \
     +trainer.total_epochs=3 \
     +trainer.log_level=DEBUG \
     trainer.total_epochs=30 "${@:1}"

@@ -57,7 +57,7 @@ python3 -m verl.trainer.main_ppo \
     trainer.critic_warmup=0 \
     trainer.logger=['console','wandb'] \
     trainer.project_name='deepscaler' \
-    +trainer.entity=mm328 \
+    +trainer.entity=mm328-rice-university \
     trainer.experiment_name='deepscaler-1.5b-8k' \
     +trainer.val_before_train=True \
     trainer.n_gpus_per_node=8 \

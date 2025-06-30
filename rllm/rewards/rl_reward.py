@@ -32,7 +32,7 @@ class RLRewardFn(RewardFn):
 
         if self.config.hedging_beta > 0:
             # assume `input.llm_solution` is your generated text
-            num_hedges = count_hedging_markers(input.llm_solution)
+            num_hedges = count_hedging_markers(input.model_response)
             reward -= self.config.hedging_beta * num_hedges
         
         return RewardOutput(

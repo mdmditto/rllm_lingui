@@ -65,4 +65,5 @@ python3 -m verl.trainer.main_ppo \
     trainer.save_freq=20 \
     trainer.test_freq=20 \
     trainer.default_hdfs_dir=null \
+    +trainer.log_level=DEBUG \
     trainer.total_epochs=30 "${@:1}"

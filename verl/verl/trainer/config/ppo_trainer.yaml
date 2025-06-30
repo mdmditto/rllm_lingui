@@ -156,7 +156,7 @@ algorithm:
     _target_: rllm.rewards.rl_reward.RLRewardFn
 
     # your hedging penalty weight
-    hedging_beta: 0.05
+    hedging_beta: 0.2
 
     # whatever other weights you want
     math_reward_weight: ${..math_reward_weight}     # or hard-code 1.0

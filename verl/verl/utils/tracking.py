@@ -25,43 +25,61 @@ import os
 class Tracking(object):
     supported_backend = ['wandb', 'mlflow', 'console']
 
-    def __init__(self, project_name, experiment_name, default_backend: Union[str, List[str]] = 'console', config=None):
+    def __init__(
+        self,
+        project_name: str,
+        experiment_name: str,
+        default_backend: Union[str, List[str]] = 'console',
+        config=None
+    ):
+        # Normalize backend list
         if isinstance(default_backend, str):
             default_backend = [default_backend]
         for backend in default_backend:
             if backend == 'tracking':
                 import warnings
-                warnings.warn("`tracking` logger is deprecated. use `wandb` instead.", DeprecationWarning)
+                warnings.warn("`tracking` logger is deprecated. use `wandb` instead.", 
+                              DeprecationWarning)
             else:
                 assert backend in self.supported_backend, f'{backend} is not supported'
 
         self.logger = {}
 
-        if 'tracking' in default_backend or 'wandb' in default_backend:
-            import os, wandb
-            api_key = os.environ.get("WANDB_API_KEY")
+        # W&B support
+        if 'wandb' in default_backend or 'tracking' in default_backend:
+            # Force each process to authenticate
+            api_key = os.getenv("WANDB_API_KEY")
             if api_key:
                 wandb.login(key=api_key, relogin=True)
-            # 2) Pick up the correct team/entity
-            entity = os.environ.get("WANDB_ENTITY")
-            
-            wandb.init(project=entity=entity, project_name, name=experiment_name, config=config)
+
+            # Pick up the team namespace
+            entity = os.getenv("WANDB_ENTITY")
+
+            # Initialize the run
+            wandb.init(
+                entity=entity,
+                project=project_name,
+                name=experiment_name,
+                config=config
+            )
             self.logger['wandb'] = wandb
 
+        # MLflow support (if needed)
         if 'mlflow' in default_backend:
             import mlflow
             mlflow.start_run(run_name=experiment_name)
             mlflow.log_params(_compute_mlflow_params_from_objects(config))
+            from verl.utils.tracking import _MlflowLoggingAdapter
             self.logger['mlflow'] = _MlflowLoggingAdapter()
 
+        # Console support
         if 'console' in default_backend:
-            from verl.utils.logger.aggregate_logger import LocalLogger
             self.console_logger = LocalLogger(print_to_console=True)
             self.logger['console'] = self.console_logger
 
-    def log(self, data, step, backend=None):
-        for default_backend, logger_instance in self.logger.items():
-            if backend is None or default_backend in backend:
+    def log(self, data, step: int, backend=None):
+        for name, logger_instance in self.logger.items():
+            if backend is None or name in backend:
                 logger_instance.log(data=data, step=step)
 
 

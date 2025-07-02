@@ -109,18 +109,8 @@ import hydra
 @hydra.main(config_path='config', config_name='ppo_trainer', version_base=None)
 def main(config):
     if not ray.is_initialized():
-        # collect all the env‐vars you want forwarded
-        env_vars = {
-            'TOKENIZERS_PARALLELISM': 'true',
-            'NCCL_DEBUG': 'WARN'
-        }
-        # add your W&B creds to that map
-        for k in ('WANDB_API_KEY','WANDB_ENTITY'):
-            if k in os.environ:
-                env_vars[k] = os.environ[k]
-                
         ray.init(
-            runtime_env={'env_vars': env_vars}
+            runtime_env={'env_vars': dict(os.environ)}
         )
 
     ray.get(main_task.remote(config))

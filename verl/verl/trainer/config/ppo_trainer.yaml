@@ -145,8 +145,8 @@ reward_model:
 algorithm:
   ray_runtime_env:
     env_vars:
-      WANDB_API_KEY: ${env:WANDB_API_KEY}
-      WANDB_ENTITY: ${env:WANDB_ENTITY}
+      WANDB_API_KEY: ${oc.env:WANDB_API_KEY}
+      WANDB_ENTITY: ${oc.env:WANDB_ENTITY}
   use_ray: false
   gamma: 1.0
   lam: 1.0

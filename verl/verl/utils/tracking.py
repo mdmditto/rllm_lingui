@@ -41,10 +41,11 @@ class Tracking(object):
             import os, wandb
             api_key = os.environ.get("WANDB_API_KEY")
             if api_key:
-                # relogin=False skips prompt if already netrc-configured
-                wandb.login(key=api_key, relogin=False)
-            # Now initialize the run
-            wandb.init(project=project_name, name=experiment_name, config=config)
+                wandb.login(key=api_key, relogin=True)
+            # 2) Pick up the correct team/entity
+            entity = os.environ.get("WANDB_ENTITY")
+            
+            wandb.init(project=entity=entity, project_name, name=experiment_name, config=config)
             self.logger['wandb'] = wandb
 
         if 'mlflow' in default_backend:

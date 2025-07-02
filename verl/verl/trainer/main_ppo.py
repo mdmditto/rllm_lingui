@@ -19,6 +19,7 @@ from verl import DataProto
 import torch
 from verl.utils.reward_score import gsm8k, math
 from verl.trainer.ppo.ray_trainer import RayPPOTrainer
+import os
 
 
 from rllm.rewards.rl_reward import rllm_reward_fn

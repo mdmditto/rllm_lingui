@@ -19,6 +19,7 @@ from enum import Enum
 from functools import partial
 from pathlib import Path
 from typing import List, Union, Dict, Any
+import os
 
 
 class Tracking(object):
@@ -37,7 +38,12 @@ class Tracking(object):
         self.logger = {}
 
         if 'tracking' in default_backend or 'wandb' in default_backend:
-            import wandb
+            import os, wandb
+            api_key = os.environ.get("WANDB_API_KEY")
+            if api_key:
+                # relogin=False skips prompt if already netrc-configured
+                wandb.login(key=api_key, relogin=False)
+            # Now initialize the run
             wandb.init(project=project_name, name=experiment_name, config=config)
             self.logger['wandb'] = wandb
 

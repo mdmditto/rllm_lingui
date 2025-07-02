@@ -20,6 +20,7 @@ from functools import partial
 from pathlib import Path
 from typing import List, Union, Dict, Any
 import os
+import wandb
 
 
 class Tracking(object):

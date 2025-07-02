@@ -112,11 +112,13 @@ def main(config):
         # collect all the env‐vars you want forwarded
         env_vars = {
             'TOKENIZERS_PARALLELISM': 'true',
-            'NCCL_DEBUG': 'WARN',
-            # this pulls from YOUR shell’s env, not hard‐coding the key:
-            'WANDB_API_KEY': os.environ.get('WANDB_API_KEY', ''),
-            'WANDB_ENTITY':  os.environ.get('WANDB_ENTITY', ''),
+            'NCCL_DEBUG': 'WARN'
         }
+        # add your W&B creds to that map
+        for k in ('WANDB_API_KEY','WANDB_ENTITY'):
+            if k in os.environ:
+                env_vars[k] = os.environ[k]
+                
         ray.init(
             runtime_env={'env_vars': env_vars}
         )

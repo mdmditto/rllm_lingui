@@ -110,7 +110,7 @@ import hydra
 def main(config):
     if not ray.is_initialized():
         ray.init(
-            address="auto",
+            address=environ.get("RAY_ADDRESS", "auto"),
             runtime_env={'env_vars': dict(os.environ)}
         )
 

@@ -105,9 +105,9 @@ critic:
     enable_gradient_checkpointing: True
     use_remove_padding: False
     fsdp_config:
-      param_offload: False
+      param_offload: True
       grad_offload: False
-      optimizer_offload: False
+      optimizer_offload: True
       wrap_policy:
         # transformer_layer_cls_to_wrap: None
         min_num_params: 0

@@ -62,7 +62,7 @@ python3 -m verl.trainer.main_ppo \
     +trainer.val_before_train=True \
     ++algorithm.ray_runtime_env.env_vars.WANDB_API_KEY="${WANDB_API_KEY}" \
     ++algorithm.ray_runtime_env.env_vars.WANDB_ENTITY="${WANDB_ENTITY}" \
-    ++algorithm.ray_address="127.0.0.1:6379" \
+    ++algorithm.ray_address="127.0.0.1:6380" \
     trainer.n_gpus_per_node=8 \
     trainer.nnodes=1 \
     trainer.save_freq=20 \

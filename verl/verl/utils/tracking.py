@@ -21,6 +21,7 @@ from pathlib import Path
 from typing import List, Union, Dict, Any
 import os
 import wandb
+from verl.utils.logger.aggregate_logger import LocalLogger
 
 
 class Tracking(object):

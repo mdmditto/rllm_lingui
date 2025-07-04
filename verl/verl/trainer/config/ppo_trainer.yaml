@@ -46,13 +46,17 @@ actor_rollout_ref:
       wrap_policy:
         # transformer_layer_cls_to_wrap: None
         min_num_params: 0
-      param_offload: False
+      offload_params: True
+      pin_memory: True
+      backward_prefetch: BACKWARD_PRE
       grad_offload: False
       optimizer_offload: False
       fsdp_size: -1
   ref:
     fsdp_config:
-      param_offload: False
+      offload_params: True
+      pin_memory: True
+      backward_prefetch: BACKWARD_PRE
       wrap_policy:
         # transformer_layer_cls_to_wrap: None
         min_num_params: 0
@@ -105,9 +109,9 @@ critic:
     enable_gradient_checkpointing: True
     use_remove_padding: False
     fsdp_config:
-      param_offload: False
-      grad_offload: False
-      optimizer_offload: False
+      offload_params: True
+      pin_memory: True
+      backward_prefetch: BACKWARD_PRE
       wrap_policy:
         # transformer_layer_cls_to_wrap: None
         min_num_params: 0

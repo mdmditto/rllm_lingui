@@ -138,7 +138,7 @@ reward_model:
     use_remove_padding: False
     fsdp_config:
       min_num_params: 0
-      param_offload: False
+      offload_param: False
       fsdp_size: -1
   micro_batch_size: 64
   max_length: null

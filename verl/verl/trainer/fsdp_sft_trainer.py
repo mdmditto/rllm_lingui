@@ -176,21 +176,27 @@ class FSDPSFTTrainer(object):
         if self.device_mesh.get_rank() == 0:
             print(auto_wrap_policy)
 
-        if not self.config.model.fsdp_config.cpu_offload:
-            cpu_offload = None
-        else:
-            cpu_offload = CPUOffload(offload_params=self.config.model.fsdp_config.offload_params)
+        cpu_offload = CPUOffload(
+            offload_params=self.config.model.fsdp_config.offload_params,
+            pin_memory=self.config.model.fsdp_config.pin_memory,
+        ) if self.config.model.fsdp_config.offload_params else None
 
-        self.fsdp_model = FSDP(module=self.model,
-                               auto_wrap_policy=auto_wrap_policy,
-                               param_init_fn=init_fn,
-                               sharding_strategy=ShardingStrategy.FULL_SHARD,
-                               mixed_precision=mixed_precision,
-                               device_mesh=self.device_mesh,
-                               sync_module_states=True,
-                               device_id=torch.cuda.current_device(),
-                               cpu_offload=cpu_offload,
-                               use_orig_params=False)
+        fsdp_kwargs = dict(
+            module=self.model,
+            auto_wrap_policy=auto_wrap_policy,
+            param_init_fn=init_fn,
+            sharding_strategy=ShardingStrategy.FULL_SHARD,
+            mixed_precision=mixed_precision,
+            device_mesh=self.device_mesh,
+            sync_module_states=True,
+            device_id=torch.cuda.current_device(),
+            cpu_offload=cpu_offload,
+            backward_prefetch=self.config.model.fsdp_config.backward_prefetch,
+            use_orig_params=False,
+        )
+
+# Wrap your model
+self.fsdp_model = FSDP(**fsdp_kwargs)
 
         log_gpu_memory_usage('After FSDP wrapping', logger=logger)
 

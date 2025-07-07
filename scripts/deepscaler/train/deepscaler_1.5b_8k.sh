@@ -1,5 +1,6 @@
 #!/bin/bash
 set -x
+export CUDA_VISIBLE_DEVICES="2"
 
 # Warning: Export VLLM_ATTENTION_BACKEND on every machine before starting Ray cluster.
 # vLLM without XFORMERS will results in CUDA errors.

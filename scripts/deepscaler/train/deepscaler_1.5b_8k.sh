@@ -43,10 +43,10 @@ python3 -m verl.trainer.main_ppo \
     actor_rollout_ref.actor.use_kl_loss=True \
     actor_rollout_ref.actor.kl_loss_coef=0.001 \
     actor_rollout_ref.actor.kl_loss_type=low_var_kl \
-    actor_rollout_ref.actor.ulysses_sequence_parallel_size=1 \
+    actor_rollout_ref.actor.ulysses_sequence_parallel_size=2 \
     actor_rollout_ref.model.enable_gradient_checkpointing=True \
     actor_rollout_ref.actor.fsdp_config.optimizer_offload=False \
-    actor_rollout_ref.rollout.tensor_model_parallel_size=1 \
+    actor_rollout_ref.rollout.tensor_model_parallel_size=2 \
     actor_rollout_ref.rollout.name=vllm \
     actor_rollout_ref.rollout.temperature=0.6 \
     actor_rollout_ref.rollout.val_temperature=0.6 \
@@ -64,6 +64,7 @@ python3 -m verl.trainer.main_ppo \
     ++algorithm.ray_runtime_env.env_vars.WANDB_API_KEY="${WANDB_API_KEY}" \
     ++algorithm.ray_runtime_env.env_vars.WANDB_ENTITY="${WANDB_ENTITY}" \
     trainer.n_gpus_per_node=6 \
+    ++trainer.num_rollout_actors=3 \
     trainer.nnodes=1 \
     trainer.save_freq=20 \
     trainer.test_freq=20 \

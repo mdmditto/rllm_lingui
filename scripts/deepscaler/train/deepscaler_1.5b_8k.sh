@@ -63,8 +63,8 @@ python3 -m verl.trainer.main_ppo \
     +trainer.val_before_train=True \
     ++algorithm.ray_runtime_env.env_vars.WANDB_API_KEY="${WANDB_API_KEY}" \
     ++algorithm.ray_runtime_env.env_vars.WANDB_ENTITY="${WANDB_ENTITY}" \
-    trainer.n_gpus_per_node=3 \
-    ++trainer.num_rollout_actors=3 \
+    trainer.n_gpus_per_node=2 \
+    ++trainer.num_rollout_actors=2 \
     trainer.nnodes=1 \
     trainer.save_freq=20 \
     trainer.test_freq=20 \

@@ -7,7 +7,6 @@ set -x
 export VLLM_ATTENTION_BACKEND=XFORMERS
 export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
 export XLA_PYTHON_CLIENT_ALLOCATOR=platform  # For XLA users
-export CUDA_LAUNCH_BLOCKING=1  # For better error tracing
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do

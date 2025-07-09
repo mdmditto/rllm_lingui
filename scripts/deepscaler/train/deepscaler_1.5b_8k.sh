@@ -32,7 +32,7 @@ python3 -m verl.trainer.main_ppo \
     algorithm.adv_estimator=grpo \
     data.train_files=$HOME/rllm/data/deepscaler_train.parquet \
     data.val_files=$HOME/rllm/data/aime.parquet \
-    data.train_batch_size=32 \
+    data.train_batch_size=128 \
     data.val_batch_size=256 \
     data.max_prompt_length=1024 \
     data.max_response_length=8192 \
@@ -46,11 +46,11 @@ python3 -m verl.trainer.main_ppo \
     actor_rollout_ref.actor.use_kl_loss=True \
     actor_rollout_ref.actor.kl_loss_coef=0.0001 \
     actor_rollout_ref.actor.kl_loss_type=low_var_kl \
-    actor_rollout_ref.actor.ulysses_sequence_parallel_size=1 \
+    actor_rollout_ref.actor.ulysses_sequence_parallel_size=4 \
     actor_rollout_ref.model.enable_gradient_checkpointing=True \
     ++actor_rollout_ref.model.use_flash_attention_2=True \
     actor_rollout_ref.actor.fsdp_config.optimizer_offload=False \
-    actor_rollout_ref.rollout.tensor_model_parallel_size=2 \
+    actor_rollout_ref.rollout.tensor_model_parallel_size=4 \
     ++actor_rollout_ref.actor.pipeline_parallel_size=1 \
     actor_rollout_ref.rollout.name=vllm \
     actor_rollout_ref.rollout.temperature=0.6 \
@@ -69,7 +69,7 @@ python3 -m verl.trainer.main_ppo \
     ++algorithm.ray_runtime_env.env_vars.WANDB_API_KEY="${WANDB_API_KEY}" \
     ++algorithm.ray_runtime_env.env_vars.WANDB_ENTITY="${WANDB_ENTITY}" \
     trainer.n_gpus_per_node=2 \
-    ++trainer.num_rollout_actors=2 \
+    ++trainer.num_rollout_actors=4 \
     trainer.nnodes=1 \
     trainer.save_freq=20 \
     trainer.test_freq=20 \
